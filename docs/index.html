@@ -81,10 +81,11 @@
 
     /* ── Page Title (native MyGeotab style) ── */
     #gudContainer#gudContainer .gud-page-title-bar {
-      padding: 24px 32px 0 !important;
+      padding: 28px 32px 16px !important;
       display: flex !important;
       align-items: flex-start !important;
       justify-content: space-between !important;
+      border-bottom: 1px solid var(--backgrounds-content-1) !important;
     }
     #gudContainer#gudContainer .gud-page-title-bar h1 {
       font-size: 26px !important;
@@ -94,10 +95,10 @@
       line-height: 32px !important;
     }
     #gudContainer#gudContainer .gud-page-title-bar p {
-      font-size: 14px !important;
+      font-size: 13px !important;
       font-weight: 400 !important;
       color: var(--text-secondary) !important;
-      margin: 4px 0 0 0 !important;
+      margin: 6px 0 0 0 !important;
     }
 
     /* ── Tab Bar ── */
@@ -110,7 +111,7 @@
       background: none !important;
     }
     #gudContainer#gudContainer .gud-tab-btn {
-      padding: 10px 20px !important;
+      padding: 12px 24px !important;
       font-family: var(--main-font) !important;
       font-size: 14px !important;
       font-weight: 500 !important;
@@ -138,7 +139,7 @@
     #gudContainer#gudContainer .gud-content {
       max-width: 1440px !important;
       margin: 0 auto !important;
-      padding: 20px 32px 24px !important;
+      padding: 28px 32px 32px !important;
     }
     #gudContainer#gudContainer .gud-tab-content {
       display: none !important;
@@ -151,14 +152,16 @@
     #gudContainer#gudContainer .gud-toolbar {
       display: flex !important;
       align-items: flex-end !important;
-      gap: 12px !important;
-      margin-bottom: 20px !important;
+      gap: 20px !important;
+      margin-bottom: 28px !important;
       flex-wrap: wrap !important;
+      padding-bottom: 24px !important;
+      border-bottom: 1px solid var(--backgrounds-content-1) !important;
     }
     #gudContainer#gudContainer .gud-field {
       display: flex !important;
       flex-direction: column !important;
-      gap: 6px !important;
+      gap: 8px !important;
     }
     #gudContainer#gudContainer .gud-field label {
       font-size: 12px !important;
@@ -242,17 +245,17 @@
     /* ── KPI Summary Cards ── */
     #gudContainer#gudContainer .gud-kpi-row {
       display: flex !important;
-      gap: 16px !important;
-      margin-bottom: 20px !important;
+      gap: 20px !important;
+      margin-bottom: 28px !important;
       flex-wrap: wrap !important;
     }
     #gudContainer#gudContainer .gud-kpi-card {
       flex: 1 !important;
-      min-width: 160px !important;
+      min-width: 180px !important;
       background: var(--backgrounds-main) !important;
       border: 1px solid var(--borders-general) !important;
       border-radius: 8px !important;
-      padding: 16px 20px !important;
+      padding: 20px 24px !important;
     }
     #gudContainer#gudContainer .gud-kpi-card__label {
       font-size: 11px !important;
@@ -260,10 +263,10 @@
       text-transform: uppercase !important;
       letter-spacing: 0.32px !important;
       color: var(--text-secondary) !important;
-      margin-bottom: 4px !important;
+      margin-bottom: 8px !important;
     }
     #gudContainer#gudContainer .gud-kpi-card__value {
-      font-size: 24px !important;
+      font-size: 28px !important;
       font-weight: 600 !important;
       color: var(--text-primary) !important;
       line-height: 1.2 !important;
@@ -283,16 +286,16 @@
     #gudContainer#gudContainer .gud-panel__header {
       background: var(--backgrounds-main) !important;
       border-bottom: 1px solid var(--borders-general) !important;
-      padding: 12px 20px !important;
+      padding: 16px 20px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
     }
     #gudContainer#gudContainer .gud-panel__title {
-      font-size: 14px !important;
-      font-weight: 500 !important;
+      font-size: 15px !important;
+      font-weight: 600 !important;
       color: var(--text-primary) !important;
-      line-height: 20px !important;
+      line-height: 22px !important;
     }
 
     /* ── Tables ── */
@@ -306,11 +309,11 @@
     #gudContainer#gudContainer .gud-table thead th {
       background: var(--backgrounds-content-1) !important;
       font-size: 12px !important;
-      font-weight: 500 !important;
+      font-weight: 600 !important;
       text-transform: uppercase !important;
-      letter-spacing: 0.32px !important;
+      letter-spacing: 0.4px !important;
       color: var(--text-secondary) !important;
-      padding: 12px 16px !important;
+      padding: 14px 16px !important;
       text-align: left !important;
       border-bottom: 1px solid var(--borders-general) !important;
       position: sticky !important;
@@ -319,11 +322,11 @@
       white-space: nowrap !important;
     }
     #gudContainer#gudContainer .gud-table tbody td {
-      padding: 10px 16px !important;
+      padding: 14px 16px !important;
       border-bottom: 1px solid var(--backgrounds-content-1) !important;
-      font-family: var(--main-font-data) !important;
-      font-size: 13px !important;
-      line-height: 18px !important;
+      font-family: var(--main-font) !important;
+      font-size: 14px !important;
+      line-height: 20px !important;
       color: var(--text-primary) !important;
     }
     #gudContainer#gudContainer .gud-table tbody tr:last-child td {
@@ -422,8 +425,25 @@
     @keyframes gudSpin { to { transform: rotate(360deg); } }
 
     /* ── Status Log (collapsible debug) ── */
+    #gudContainer#gudContainer .gud-log-details {
+      margin-top: 8px !important;
+    }
+    #gudContainer#gudContainer .gud-log-summary {
+      font-family: var(--main-font) !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      color: var(--text-secondary) !important;
+      cursor: pointer !important;
+      padding: 6px 0 !important;
+      user-select: none !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.3px !important;
+    }
+    #gudContainer#gudContainer .gud-log-summary:hover {
+      color: var(--text-primary) !important;
+    }
     #gudContainer#gudContainer .gud-status-log {
-      margin-top: 16px !important;
+      margin-top: 8px !important;
       padding: 10px 16px !important;
       background: var(--backgrounds-content-1) !important;
       color: var(--text-secondary) !important;
@@ -486,7 +506,7 @@
     /* ── Status Filter Chips ── */
     #gudContainer#gudContainer .gud-filter-chips {
       display: flex !important;
-      gap: 8px !important;
+      gap: 10px !important;
       align-items: center !important;
       flex-wrap: wrap !important;
     }
@@ -494,7 +514,7 @@
       font-family: var(--main-font) !important;
       font-size: 13px !important;
       font-weight: 500 !important;
-      padding: 6px 14px !important;
+      padding: 8px 16px !important;
       border-radius: 20px !important;
       border: 1px solid var(--borders-general) !important;
       background: var(--backgrounds-main) !important;
@@ -524,12 +544,12 @@
 
     /* ── Responsive ── */
     @media (max-width: 800px) {
-      #gudContainer .gud-content { padding: 16px; }
-      #gudContainer .gud-page-header { padding: 16px; }
-      #gudContainer .gud-tab-bar { padding: 0 16px; }
-      #gudContainer .gud-kpi-row { flex-direction: column; }
-      #gudContainer .gud-toolbar { flex-direction: column; align-items: stretch; }
-      #gudContainer .gud-field select { min-width: auto; width: 100%; }
+      #gudContainer#gudContainer .gud-content { padding: 16px !important; }
+      #gudContainer#gudContainer .gud-page-title-bar { padding: 16px !important; }
+      #gudContainer#gudContainer .gud-tab-bar { padding: 0 16px !important; }
+      #gudContainer#gudContainer .gud-kpi-row { flex-direction: column !important; }
+      #gudContainer#gudContainer .gud-toolbar { flex-direction: column !important; align-items: stretch !important; }
+      #gudContainer#gudContainer .gud-field select { min-width: auto !important; width: 100% !important; }
     }
   </style>
 </head>
@@ -657,9 +677,12 @@
 
   </div>
 
-  <!-- Status Log -->
+  <!-- Status Log (collapsible) -->
   <div class="gud-content" style="padding-top:0;">
-    <div class="gud-status-log" id="output"></div>
+    <details class="gud-log-details">
+      <summary class="gud-log-summary">Activity Log</summary>
+      <div class="gud-status-log" id="output"></div>
+    </details>
   </div>
 
 </div>

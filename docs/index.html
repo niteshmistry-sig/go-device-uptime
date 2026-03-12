@@ -68,53 +68,39 @@
       line-height: 20px;
       color: var(--text-primary);
       background: var(--backgrounds-content-0);
-      min-height: 100vh;
     }
 
-    /* ── Page Header (Brand Bar) ── */
-    #gudContainer .gud-page-header {
-      background: var(--backgrounds-primary-brand);
-      padding: 20px 32px;
+    /* ── Page Title (native MyGeotab style) ── */
+    #gudContainer .gud-page-title-bar {
+      padding: 24px 32px 0;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
     }
-    #gudContainer .gud-page-header h1 {
-      font-size: 20px;
+    #gudContainer .gud-page-title-bar h1 {
+      font-size: 26px;
       font-weight: 400;
-      color: var(--text-reverse-primary);
+      color: var(--text-primary);
       margin: 0;
-      line-height: 24px;
+      line-height: 32px;
     }
-    #gudContainer .gud-page-header p {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--text-reverse-primary);
-      opacity: 0.85;
-      margin: 2px 0 0 0;
-    }
-    #gudContainer .gud-header-icon {
-      width: 18px;
-      height: 18px;
-      fill: var(--text-reverse-primary);
-      margin-right: 12px;
-      flex-shrink: 0;
-    }
-    #gudContainer .gud-header-left {
-      display: flex;
-      align-items: center;
+    #gudContainer .gud-page-title-bar p {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin: 4px 0 0 0;
     }
 
     /* ── Tab Bar ── */
     #gudContainer .gud-tab-bar {
-      background: var(--backgrounds-main);
-      border-bottom: 1px solid var(--borders-general);
       padding: 0 32px;
       display: flex;
       gap: 0;
+      border-bottom: 2px solid var(--backgrounds-content-1);
+      margin-top: 16px;
     }
     #gudContainer .gud-tab-btn {
-      padding: 14px 24px;
+      padding: 10px 20px;
       font-family: var(--main-font);
       font-size: 14px;
       font-weight: 500;
@@ -122,8 +108,8 @@
       border: none;
       background: none;
       cursor: pointer;
-      border-bottom: 3px solid transparent;
-      margin-bottom: -1px;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
       transition: color 0.15s, border-color 0.15s;
     }
     #gudContainer .gud-tab-btn:hover {
@@ -138,7 +124,7 @@
     #gudContainer .gud-content {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 24px 32px 32px;
+      padding: 20px 32px 24px;
     }
     #gudContainer .gud-tab-content {
       display: none;
@@ -151,8 +137,8 @@
     #gudContainer .gud-toolbar {
       display: flex;
       align-items: flex-end;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     #gudContainer .gud-field {
@@ -240,17 +226,16 @@
     #gudContainer .gud-kpi-row {
       display: flex;
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     #gudContainer .gud-kpi-card {
       flex: 1;
-      min-width: 180px;
+      min-width: 160px;
       background: var(--backgrounds-main);
       border: 1px solid var(--borders-general);
       border-radius: 8px;
-      padding: 20px 24px;
-      box-shadow: 0 1px 3px rgba(31,40,51,0.06), 0 1px 2px rgba(31,40,51,0.04);
+      padding: 16px 20px;
     }
     #gudContainer .gud-kpi-card__label {
       font-size: 11px;
@@ -258,13 +243,13 @@
       text-transform: uppercase;
       letter-spacing: 0.32px;
       color: var(--text-secondary);
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     #gudContainer .gud-kpi-card__value {
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 600;
       color: var(--text-primary);
-      line-height: 1.1;
+      line-height: 1.2;
     }
     #gudContainer .gud-kpi-card--success .gud-kpi-card__value { color: var(--accents-success--detail); }
     #gudContainer .gud-kpi-card--warning .gud-kpi-card__value { color: var(--accents-warning--detail); }
@@ -275,23 +260,22 @@
       background: var(--backgrounds-main);
       border: 1px solid var(--borders-general);
       border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(31,40,51,0.06), 0 1px 2px rgba(31,40,51,0.04);
       overflow: hidden;
       margin-bottom: 24px;
     }
     #gudContainer .gud-panel__header {
-      background: var(--backgrounds-content-1);
+      background: var(--backgrounds-main);
       border-bottom: 1px solid var(--borders-general);
-      padding: 14px 24px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     #gudContainer .gud-panel__title {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--text-primary);
-      line-height: 24px;
+      line-height: 20px;
     }
 
     /* ── Tables ── */
@@ -420,19 +404,19 @@
     }
     @keyframes gudSpin { to { transform: rotate(360deg); } }
 
-    /* ── Status Banner (log output) ── */
+    /* ── Status Log (collapsible debug) ── */
     #gudContainer .gud-status-log {
-      margin-top: 24px;
-      padding: 14px 20px;
-      background: var(--backgrounds-reverse-1);
-      color: #8ec07c;
+      margin-top: 16px;
+      padding: 10px 16px;
+      background: var(--backgrounds-content-1);
+      color: var(--text-secondary);
       font-family: var(--main-font-data);
-      font-size: 12px;
-      line-height: 18px;
-      border-radius: 8px;
+      font-size: 11px;
+      line-height: 16px;
+      border-radius: 6px;
+      border: 1px solid var(--borders-general);
       white-space: pre-wrap;
-      min-height: 40px;
-      max-height: 180px;
+      max-height: 120px;
       overflow-y: auto;
     }
 
@@ -534,17 +518,13 @@
 
 <div id="gudContainer">
 
-  <!-- Page Header -->
-  <div class="gud-page-header">
-    <div class="gud-header-left">
-      <svg class="gud-header-icon" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-      </svg>
-      <div>
-        <h1>GO Device Uptime Dashboard</h1>
-        <p>Monitor device communication health and diagnose interruptions</p>
-      </div>
+  <!-- Page Title -->
+  <div class="gud-page-title-bar">
+    <div>
+      <h1>GO Device Uptime</h1>
+      <p>Communication health and gap analysis</p>
     </div>
+    <button class="gud-btn gud-btn--primary" id="btnRefresh" onclick="loadRealtimeStatus()">&#x21bb; Refresh Status</button>
   </div>
 
   <!-- Tab Bar -->
@@ -580,7 +560,6 @@
             <button class="gud-chip" data-status="error" onclick="setStatusFilter(this, 'error')">Offline</button>
           </div>
         </div>
-        <button class="gud-btn gud-btn--secondary" id="btnRefresh" onclick="loadRealtimeStatus()">&#x21bb; Refresh</button>
       </div>
 
       <!-- KPI Cards -->

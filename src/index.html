@@ -55,452 +55,471 @@
       --main-font-data: "Roboto Mono", "Segoe UI Mono", monospace;
     }
 
-    /* — Reset scoped to container — */
-    #gudContainer *, #gudContainer *::before, #gudContainer *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    /* — Reset scoped to container (doubled-ID for MyGeotab specificity) — */
+    #gudContainer#gudContainer *,
+    #gudContainer#gudContainer *::before,
+    #gudContainer#gudContainer *::after {
+      box-sizing: border-box !important;
     }
 
-    #gudContainer {
-      font-family: var(--main-font);
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-primary);
-      background: var(--backgrounds-content-0);
+    #gudContainer#gudContainer {
+      font-family: var(--main-font) !important;
+      font-size: 14px !important;
+      line-height: 20px !important;
+      color: var(--text-primary) !important;
+      background: var(--backgrounds-content-0) !important;
+    }
+
+    #gudContainer#gudContainer h1,
+    #gudContainer#gudContainer h2,
+    #gudContainer#gudContainer h3,
+    #gudContainer#gudContainer p {
+      font-family: var(--main-font) !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
     /* ── Page Title (native MyGeotab style) ── */
-    #gudContainer .gud-page-title-bar {
-      padding: 24px 32px 0;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+    #gudContainer#gudContainer .gud-page-title-bar {
+      padding: 24px 32px 0 !important;
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: space-between !important;
     }
-    #gudContainer .gud-page-title-bar h1 {
-      font-size: 26px;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin: 0;
-      line-height: 32px;
+    #gudContainer#gudContainer .gud-page-title-bar h1 {
+      font-size: 26px !important;
+      font-weight: 400 !important;
+      color: var(--text-primary) !important;
+      margin: 0 !important;
+      line-height: 32px !important;
     }
-    #gudContainer .gud-page-title-bar p {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      margin: 4px 0 0 0;
+    #gudContainer#gudContainer .gud-page-title-bar p {
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      color: var(--text-secondary) !important;
+      margin: 4px 0 0 0 !important;
     }
 
     /* ── Tab Bar ── */
-    #gudContainer .gud-tab-bar {
-      padding: 0 32px;
-      display: flex;
-      gap: 0;
-      border-bottom: 2px solid var(--backgrounds-content-1);
-      margin-top: 16px;
+    #gudContainer#gudContainer .gud-tab-bar {
+      padding: 0 32px !important;
+      display: flex !important;
+      gap: 0 !important;
+      border-bottom: 2px solid var(--backgrounds-content-1) !important;
+      margin-top: 16px !important;
+      background: none !important;
     }
-    #gudContainer .gud-tab-btn {
-      padding: 10px 20px;
-      font-family: var(--main-font);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      border: none;
-      background: none;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: color 0.15s, border-color 0.15s;
+    #gudContainer#gudContainer .gud-tab-btn {
+      padding: 10px 20px !important;
+      font-family: var(--main-font) !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: var(--text-secondary) !important;
+      border: none !important;
+      background: none !important;
+      cursor: pointer !important;
+      border-bottom: 2px solid transparent !important;
+      margin-bottom: -2px !important;
+      transition: color 0.15s, border-color 0.15s !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      outline: none !important;
     }
-    #gudContainer .gud-tab-btn:hover {
-      color: var(--action-primary--default);
+    #gudContainer#gudContainer .gud-tab-btn:hover {
+      color: var(--action-primary--default) !important;
+      background: none !important;
     }
-    #gudContainer .gud-tab-btn.active {
-      color: var(--action-primary--default);
-      border-bottom-color: var(--action-primary--default);
+    #gudContainer#gudContainer .gud-tab-btn.active {
+      color: var(--action-primary--default) !important;
+      border-bottom-color: var(--action-primary--default) !important;
     }
 
     /* ── Content Area ── */
-    #gudContainer .gud-content {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 20px 32px 24px;
+    #gudContainer#gudContainer .gud-content {
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      padding: 20px 32px 24px !important;
     }
-    #gudContainer .gud-tab-content {
-      display: none;
+    #gudContainer#gudContainer .gud-tab-content {
+      display: none !important;
     }
-    #gudContainer .gud-tab-content.active {
-      display: block;
+    #gudContainer#gudContainer .gud-tab-content.active {
+      display: block !important;
     }
 
     /* ── Controls Toolbar ── */
-    #gudContainer .gud-toolbar {
-      display: flex;
-      align-items: flex-end;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+    #gudContainer#gudContainer .gud-toolbar {
+      display: flex !important;
+      align-items: flex-end !important;
+      gap: 12px !important;
+      margin-bottom: 20px !important;
+      flex-wrap: wrap !important;
     }
-    #gudContainer .gud-field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    #gudContainer#gudContainer .gud-field {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 6px !important;
     }
-    #gudContainer .gud-field label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.32px;
+    #gudContainer#gudContainer .gud-field label {
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      color: var(--text-secondary) !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.32px !important;
     }
-    #gudContainer .gud-field select,
-    #gudContainer .gud-field input[type="datetime-local"],
-    #gudContainer .gud-field input[type="number"] {
-      font-family: var(--main-font);
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-primary);
-      padding: 9px 12px;
-      border: 1px solid var(--borders-general);
-      border-radius: 4px;
-      background: var(--backgrounds-main);
-      min-height: 40px;
-      transition: border-color 0.15s, box-shadow 0.15s;
+    #gudContainer#gudContainer .gud-field select,
+    #gudContainer#gudContainer .gud-field input[type="datetime-local"],
+    #gudContainer#gudContainer .gud-field input[type="number"] {
+      font-family: var(--main-font) !important;
+      font-size: 14px !important;
+      line-height: 20px !important;
+      color: var(--text-primary) !important;
+      padding: 9px 12px !important;
+      border: 1px solid var(--borders-general) !important;
+      border-radius: 4px !important;
+      background: var(--backgrounds-main) !important;
+      min-height: 40px !important;
+      transition: border-color 0.15s, box-shadow 0.15s !important;
+      -webkit-appearance: auto !important;
+      appearance: auto !important;
     }
-    #gudContainer .gud-field select:hover,
-    #gudContainer .gud-field input:hover {
-      border-color: var(--borders-form-field--hover);
+    #gudContainer#gudContainer .gud-field select:hover,
+    #gudContainer#gudContainer .gud-field input:hover {
+      border-color: var(--borders-form-field--hover) !important;
     }
-    #gudContainer .gud-field select:focus,
-    #gudContainer .gud-field input:focus {
-      outline: none;
-      border-color: var(--borders-form-field--active);
-      box-shadow: 0 0 0 3px rgba(0,120,211,0.15);
+    #gudContainer#gudContainer .gud-field select:focus,
+    #gudContainer#gudContainer .gud-field input:focus {
+      outline: none !important;
+      border-color: var(--borders-form-field--active) !important;
+      box-shadow: 0 0 0 3px rgba(0,120,211,0.15) !important;
     }
-    #gudContainer .gud-field select {
-      min-width: 220px;
+    #gudContainer#gudContainer .gud-field select {
+      min-width: 220px !important;
     }
 
     /* ── Buttons ── */
-    #gudContainer .gud-btn {
-      font-family: var(--main-font);
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      padding: 10px 28px;
-      min-height: 40px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.15s, box-shadow 0.15s;
+    #gudContainer#gudContainer .gud-btn {
+      font-family: var(--main-font) !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      line-height: 20px !important;
+      padding: 10px 28px !important;
+      min-height: 40px !important;
+      border-radius: 4px !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: background 0.15s, box-shadow 0.15s !important;
+      text-decoration: none !important;
     }
-    #gudContainer .gud-btn--primary {
-      background: var(--action-primary--default);
-      color: var(--text-reverse-primary);
-      box-shadow: 0 1px 2px rgba(0,120,211,0.2);
+    #gudContainer#gudContainer .gud-btn--primary {
+      background: var(--action-primary--default) !important;
+      color: var(--text-reverse-primary) !important;
+      box-shadow: 0 1px 2px rgba(0,120,211,0.2) !important;
     }
-    #gudContainer .gud-btn--primary:hover {
-      background: var(--action-primary--hover);
-      box-shadow: 0 2px 4px rgba(0,120,211,0.3);
+    #gudContainer#gudContainer .gud-btn--primary:hover {
+      background: var(--action-primary--hover) !important;
+      box-shadow: 0 2px 4px rgba(0,120,211,0.3) !important;
     }
-    #gudContainer .gud-btn--primary:active {
-      background: var(--action-primary--active);
+    #gudContainer#gudContainer .gud-btn--primary:active {
+      background: var(--action-primary--active) !important;
     }
-    #gudContainer .gud-btn--primary:disabled {
-      background: var(--backgrounds-field-disabled);
-      color: var(--text-button-disabled);
-      cursor: not-allowed;
-      box-shadow: none;
+    #gudContainer#gudContainer .gud-btn--primary:disabled {
+      background: var(--backgrounds-field-disabled) !important;
+      color: var(--text-button-disabled) !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
     }
-    #gudContainer .gud-btn--secondary {
-      background: var(--backgrounds-main);
-      color: var(--action-secondary--default);
-      border: 1px solid var(--borders-general);
+    #gudContainer#gudContainer .gud-btn--secondary {
+      background: var(--backgrounds-main) !important;
+      color: var(--action-secondary--default) !important;
+      border: 1px solid var(--borders-general) !important;
     }
-    #gudContainer .gud-btn--secondary:hover {
-      background: var(--action-tertiary--hover);
-      border-color: var(--borders-secondary);
+    #gudContainer#gudContainer .gud-btn--secondary:hover {
+      background: var(--action-tertiary--hover) !important;
+      border-color: var(--borders-secondary) !important;
     }
 
     /* ── KPI Summary Cards ── */
-    #gudContainer .gud-kpi-row {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+    #gudContainer#gudContainer .gud-kpi-row {
+      display: flex !important;
+      gap: 16px !important;
+      margin-bottom: 20px !important;
+      flex-wrap: wrap !important;
     }
-    #gudContainer .gud-kpi-card {
-      flex: 1;
-      min-width: 160px;
-      background: var(--backgrounds-main);
-      border: 1px solid var(--borders-general);
-      border-radius: 8px;
-      padding: 16px 20px;
+    #gudContainer#gudContainer .gud-kpi-card {
+      flex: 1 !important;
+      min-width: 160px !important;
+      background: var(--backgrounds-main) !important;
+      border: 1px solid var(--borders-general) !important;
+      border-radius: 8px !important;
+      padding: 16px 20px !important;
     }
-    #gudContainer .gud-kpi-card__label {
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.32px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
+    #gudContainer#gudContainer .gud-kpi-card__label {
+      font-size: 11px !important;
+      font-weight: 500 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.32px !important;
+      color: var(--text-secondary) !important;
+      margin-bottom: 4px !important;
     }
-    #gudContainer .gud-kpi-card__value {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.2;
+    #gudContainer#gudContainer .gud-kpi-card__value {
+      font-size: 24px !important;
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+      line-height: 1.2 !important;
     }
-    #gudContainer .gud-kpi-card--success .gud-kpi-card__value { color: var(--accents-success--detail); }
-    #gudContainer .gud-kpi-card--warning .gud-kpi-card__value { color: var(--accents-warning--detail); }
-    #gudContainer .gud-kpi-card--error .gud-kpi-card__value { color: var(--accents-error--detail); }
+    #gudContainer#gudContainer .gud-kpi-card--success .gud-kpi-card__value { color: var(--accents-success--detail) !important; }
+    #gudContainer#gudContainer .gud-kpi-card--warning .gud-kpi-card__value { color: var(--accents-warning--detail) !important; }
+    #gudContainer#gudContainer .gud-kpi-card--error .gud-kpi-card__value { color: var(--accents-error--detail) !important; }
 
     /* ── Panel / Card ── */
-    #gudContainer .gud-panel {
-      background: var(--backgrounds-main);
-      border: 1px solid var(--borders-general);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 24px;
+    #gudContainer#gudContainer .gud-panel {
+      background: var(--backgrounds-main) !important;
+      border: 1px solid var(--borders-general) !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      margin-bottom: 24px !important;
     }
-    #gudContainer .gud-panel__header {
-      background: var(--backgrounds-main);
-      border-bottom: 1px solid var(--borders-general);
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    #gudContainer#gudContainer .gud-panel__header {
+      background: var(--backgrounds-main) !important;
+      border-bottom: 1px solid var(--borders-general) !important;
+      padding: 12px 20px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
     }
-    #gudContainer .gud-panel__title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      line-height: 20px;
+    #gudContainer#gudContainer .gud-panel__title {
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: var(--text-primary) !important;
+      line-height: 20px !important;
     }
 
     /* ── Tables ── */
-    #gudContainer .gud-table-wrap {
-      overflow-x: auto;
+    #gudContainer#gudContainer .gud-table-wrap {
+      overflow-x: auto !important;
     }
-    #gudContainer .gud-table {
-      width: 100%;
-      border-collapse: collapse;
+    #gudContainer#gudContainer .gud-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
     }
-    #gudContainer .gud-table thead th {
-      background: var(--backgrounds-content-1);
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.32px;
-      color: var(--text-secondary);
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--borders-general);
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      white-space: nowrap;
+    #gudContainer#gudContainer .gud-table thead th {
+      background: var(--backgrounds-content-1) !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.32px !important;
+      color: var(--text-secondary) !important;
+      padding: 12px 16px !important;
+      text-align: left !important;
+      border-bottom: 1px solid var(--borders-general) !important;
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1 !important;
+      white-space: nowrap !important;
     }
-    #gudContainer .gud-table tbody td {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--backgrounds-content-1);
-      font-family: var(--main-font-data);
-      font-size: 13px;
-      line-height: 18px;
-      color: var(--text-primary);
+    #gudContainer#gudContainer .gud-table tbody td {
+      padding: 10px 16px !important;
+      border-bottom: 1px solid var(--backgrounds-content-1) !important;
+      font-family: var(--main-font-data) !important;
+      font-size: 13px !important;
+      line-height: 18px !important;
+      color: var(--text-primary) !important;
     }
-    #gudContainer .gud-table tbody tr:last-child td {
-      border-bottom: none;
+    #gudContainer#gudContainer .gud-table tbody tr:last-child td {
+      border-bottom: none !important;
     }
-    #gudContainer .gud-table tbody tr:nth-child(even) {
-      background: var(--backgrounds-content-0);
+    #gudContainer#gudContainer .gud-table tbody tr:nth-child(even) {
+      background: var(--backgrounds-content-0) !important;
     }
-    #gudContainer .gud-table tbody tr:hover {
-      background: var(--accents-general--main);
+    #gudContainer#gudContainer .gud-table tbody tr:hover {
+      background: var(--accents-general--main) !important;
     }
 
     /* ── Status Row Colors ── */
-    #gudContainer .gud-table tbody tr.gud-row--success {
-      background: var(--accents-success--main);
+    #gudContainer#gudContainer .gud-table tbody tr.gud-row--success {
+      background: var(--accents-success--main) !important;
     }
-    #gudContainer .gud-table tbody tr.gud-row--success:hover {
-      background: #d6f5df;
+    #gudContainer#gudContainer .gud-table tbody tr.gud-row--success:hover {
+      background: #d6f5df !important;
     }
-    #gudContainer .gud-table tbody tr.gud-row--warning {
-      background: var(--accents-warning--main);
+    #gudContainer#gudContainer .gud-table tbody tr.gud-row--warning {
+      background: var(--accents-warning--main) !important;
     }
-    #gudContainer .gud-table tbody tr.gud-row--warning:hover {
-      background: #fff0cc;
+    #gudContainer#gudContainer .gud-table tbody tr.gud-row--warning:hover {
+      background: #fff0cc !important;
     }
-    #gudContainer .gud-table tbody tr.gud-row--error {
-      background: var(--accents-error--main);
+    #gudContainer#gudContainer .gud-table tbody tr.gud-row--error {
+      background: var(--accents-error--main) !important;
     }
-    #gudContainer .gud-table tbody tr.gud-row--error:hover {
-      background: #ffd9d6;
+    #gudContainer#gudContainer .gud-table tbody tr.gud-row--error:hover {
+      background: #ffd9d6 !important;
     }
 
     /* ── Status Dot ── */
-    #gudContainer .gud-status-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 8px;
-      vertical-align: middle;
+    #gudContainer#gudContainer .gud-status-dot {
+      display: inline-block !important;
+      width: 10px !important;
+      height: 10px !important;
+      border-radius: 50% !important;
+      margin-right: 8px !important;
+      vertical-align: middle !important;
     }
-    #gudContainer .gud-status-dot--success { background: var(--accents-success--detail); }
-    #gudContainer .gud-status-dot--warning { background: var(--accents-warning--detail); }
-    #gudContainer .gud-status-dot--error { background: var(--accents-error--detail); }
+    #gudContainer#gudContainer .gud-status-dot--success { background: var(--accents-success--detail) !important; }
+    #gudContainer#gudContainer .gud-status-dot--warning { background: var(--accents-warning--detail) !important; }
+    #gudContainer#gudContainer .gud-status-dot--error { background: var(--accents-error--detail) !important; }
 
     /* ── Pill / Badge ── */
-    #gudContainer .gud-pill {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-family: var(--main-font);
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 16px;
-      white-space: nowrap;
+    #gudContainer#gudContainer .gud-pill {
+      display: inline-block !important;
+      padding: 3px 10px !important;
+      border-radius: 12px !important;
+      font-family: var(--main-font) !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      line-height: 16px !important;
+      white-space: nowrap !important;
     }
-    #gudContainer .gud-pill--error {
-      background: var(--accents-error--main);
-      color: var(--accents-error--detail);
+    #gudContainer#gudContainer .gud-pill--error {
+      background: var(--accents-error--main) !important;
+      color: var(--accents-error--detail) !important;
     }
-    #gudContainer .gud-pill--warning {
-      background: var(--accents-warning--main);
-      color: var(--accents-warning--detail);
+    #gudContainer#gudContainer .gud-pill--warning {
+      background: var(--accents-warning--main) !important;
+      color: var(--accents-warning--detail) !important;
     }
-    #gudContainer .gud-pill--success {
-      background: var(--accents-success--main);
-      color: var(--accents-success--detail);
+    #gudContainer#gudContainer .gud-pill--success {
+      background: var(--accents-success--main) !important;
+      color: var(--accents-success--detail) !important;
     }
-    #gudContainer .gud-pill--info {
-      background: var(--accents-general--main);
-      color: var(--accents-general--detail);
+    #gudContainer#gudContainer .gud-pill--info {
+      background: var(--accents-general--main) !important;
+      color: var(--accents-general--detail) !important;
     }
-    #gudContainer .gud-pill--neutral {
-      background: var(--backgrounds-content-1);
-      color: var(--text-secondary);
+    #gudContainer#gudContainer .gud-pill--neutral {
+      background: var(--backgrounds-content-1) !important;
+      color: var(--text-secondary) !important;
     }
 
     /* ── Loading State ── */
-    #gudContainer .gud-loading {
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--text-secondary);
-      font-size: 14px;
+    #gudContainer#gudContainer .gud-loading {
+      text-align: center !important;
+      padding: 48px 24px !important;
+      color: var(--text-secondary) !important;
+      font-size: 14px !important;
     }
-    #gudContainer .gud-spinner {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 3px solid var(--borders-general);
-      border-top-color: var(--action-primary--default);
-      border-radius: 50%;
-      animation: gudSpin 0.8s linear infinite;
-      margin-right: 10px;
-      vertical-align: middle;
+    #gudContainer#gudContainer .gud-spinner {
+      display: inline-block !important;
+      width: 24px !important;
+      height: 24px !important;
+      border: 3px solid var(--borders-general) !important;
+      border-top-color: var(--action-primary--default) !important;
+      border-radius: 50% !important;
+      animation: gudSpin 0.8s linear infinite !important;
+      margin-right: 10px !important;
+      vertical-align: middle !important;
     }
     @keyframes gudSpin { to { transform: rotate(360deg); } }
 
     /* ── Status Log (collapsible debug) ── */
-    #gudContainer .gud-status-log {
-      margin-top: 16px;
-      padding: 10px 16px;
-      background: var(--backgrounds-content-1);
-      color: var(--text-secondary);
-      font-family: var(--main-font-data);
-      font-size: 11px;
-      line-height: 16px;
-      border-radius: 6px;
-      border: 1px solid var(--borders-general);
-      white-space: pre-wrap;
-      max-height: 120px;
-      overflow-y: auto;
+    #gudContainer#gudContainer .gud-status-log {
+      margin-top: 16px !important;
+      padding: 10px 16px !important;
+      background: var(--backgrounds-content-1) !important;
+      color: var(--text-secondary) !important;
+      font-family: var(--main-font-data) !important;
+      font-size: 11px !important;
+      line-height: 16px !important;
+      border-radius: 6px !important;
+      border: 1px solid var(--borders-general) !important;
+      white-space: pre-wrap !important;
+      max-height: 120px !important;
+      overflow-y: auto !important;
     }
 
     /* ── Sortable Headers ── */
-    #gudContainer .gud-table thead th.gud-sortable {
-      cursor: pointer;
-      user-select: none;
+    #gudContainer#gudContainer .gud-table thead th.gud-sortable {
+      cursor: pointer !important;
+      user-select: none !important;
     }
-    #gudContainer .gud-table thead th.gud-sortable:hover {
-      background: var(--backgrounds-hover);
-      color: var(--text-primary);
+    #gudContainer#gudContainer .gud-table thead th.gud-sortable:hover {
+      background: var(--backgrounds-hover) !important;
+      color: var(--text-primary) !important;
     }
-    #gudContainer .gud-sort-icon {
-      display: inline-block;
-      margin-left: 4px;
-      font-size: 10px;
-      color: var(--text-placeholder);
-      vertical-align: middle;
+    #gudContainer#gudContainer .gud-sort-icon {
+      display: inline-block !important;
+      margin-left: 4px !important;
+      font-size: 10px !important;
+      color: var(--text-placeholder) !important;
+      vertical-align: middle !important;
     }
-    #gudContainer .gud-sort-icon.active {
-      color: var(--action-primary--default);
+    #gudContainer#gudContainer .gud-sort-icon.active {
+      color: var(--action-primary--default) !important;
     }
 
     /* ── Search Input ── */
-    #gudContainer .gud-search {
-      font-family: var(--main-font);
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-primary);
-      padding: 9px 12px 9px 36px;
-      border: 1px solid var(--borders-general);
-      border-radius: 4px;
-      background: var(--backgrounds-main) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238DA4B9' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") no-repeat 12px center;
-      min-height: 40px;
-      min-width: 220px;
-      transition: border-color 0.15s, box-shadow 0.15s;
+    #gudContainer#gudContainer .gud-search {
+      font-family: var(--main-font) !important;
+      font-size: 14px !important;
+      line-height: 20px !important;
+      color: var(--text-primary) !important;
+      padding: 9px 12px 9px 36px !important;
+      border: 1px solid var(--borders-general) !important;
+      border-radius: 4px !important;
+      background: var(--backgrounds-main) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238DA4B9' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") no-repeat 12px center !important;
+      min-height: 40px !important;
+      min-width: 220px !important;
+      transition: border-color 0.15s, box-shadow 0.15s !important;
     }
-    #gudContainer .gud-search::placeholder {
-      color: var(--text-placeholder);
+    #gudContainer#gudContainer .gud-search::placeholder {
+      color: var(--text-placeholder) !important;
     }
-    #gudContainer .gud-search:hover {
-      border-color: var(--borders-form-field--hover);
+    #gudContainer#gudContainer .gud-search:hover {
+      border-color: var(--borders-form-field--hover) !important;
     }
-    #gudContainer .gud-search:focus {
-      outline: none;
-      border-color: var(--borders-form-field--active);
-      box-shadow: 0 0 0 3px rgba(0,120,211,0.15);
+    #gudContainer#gudContainer .gud-search:focus {
+      outline: none !important;
+      border-color: var(--borders-form-field--active) !important;
+      box-shadow: 0 0 0 3px rgba(0,120,211,0.15) !important;
     }
 
     /* ── Status Filter Chips ── */
-    #gudContainer .gud-filter-chips {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
+    #gudContainer#gudContainer .gud-filter-chips {
+      display: flex !important;
+      gap: 8px !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
     }
-    #gudContainer .gud-chip {
-      font-family: var(--main-font);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid var(--borders-general);
-      background: var(--backgrounds-main);
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.15s;
+    #gudContainer#gudContainer .gud-chip {
+      font-family: var(--main-font) !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      padding: 6px 14px !important;
+      border-radius: 20px !important;
+      border: 1px solid var(--borders-general) !important;
+      background: var(--backgrounds-main) !important;
+      color: var(--text-secondary) !important;
+      cursor: pointer !important;
+      transition: all 0.15s !important;
+      box-shadow: none !important;
+      outline: none !important;
     }
-    #gudContainer .gud-chip:hover {
-      border-color: var(--borders-secondary);
-      background: var(--backgrounds-hover);
+    #gudContainer#gudContainer .gud-chip:hover {
+      border-color: var(--borders-secondary) !important;
+      background: var(--backgrounds-hover) !important;
     }
-    #gudContainer .gud-chip.active {
-      border-color: var(--action-primary--default);
-      background: var(--accents-general--main);
-      color: var(--action-primary--default);
+    #gudContainer#gudContainer .gud-chip.active {
+      border-color: var(--action-primary--default) !important;
+      background: var(--accents-general--main) !important;
+      color: var(--action-primary--default) !important;
     }
 
     /* ── Empty State ── */
-    #gudContainer .gud-empty {
-      text-align: center;
-      padding: 32px;
-      color: var(--text-secondary);
-      font-size: 14px;
+    #gudContainer#gudContainer .gud-empty {
+      text-align: center !important;
+      padding: 32px !important;
+      color: var(--text-secondary) !important;
+      font-size: 14px !important;
     }
 
     /* ── Responsive ── */

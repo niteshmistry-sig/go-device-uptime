@@ -436,6 +436,81 @@
       overflow-y: auto;
     }
 
+    /* ── Sortable Headers ── */
+    #gudContainer .gud-table thead th.gud-sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    #gudContainer .gud-table thead th.gud-sortable:hover {
+      background: var(--backgrounds-hover);
+      color: var(--text-primary);
+    }
+    #gudContainer .gud-sort-icon {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 10px;
+      color: var(--text-placeholder);
+      vertical-align: middle;
+    }
+    #gudContainer .gud-sort-icon.active {
+      color: var(--action-primary--default);
+    }
+
+    /* ── Search Input ── */
+    #gudContainer .gud-search {
+      font-family: var(--main-font);
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-primary);
+      padding: 9px 12px 9px 36px;
+      border: 1px solid var(--borders-general);
+      border-radius: 4px;
+      background: var(--backgrounds-main) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238DA4B9' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") no-repeat 12px center;
+      min-height: 40px;
+      min-width: 220px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    #gudContainer .gud-search::placeholder {
+      color: var(--text-placeholder);
+    }
+    #gudContainer .gud-search:hover {
+      border-color: var(--borders-form-field--hover);
+    }
+    #gudContainer .gud-search:focus {
+      outline: none;
+      border-color: var(--borders-form-field--active);
+      box-shadow: 0 0 0 3px rgba(0,120,211,0.15);
+    }
+
+    /* ── Status Filter Chips ── */
+    #gudContainer .gud-filter-chips {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    #gudContainer .gud-chip {
+      font-family: var(--main-font);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--borders-general);
+      background: var(--backgrounds-main);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    #gudContainer .gud-chip:hover {
+      border-color: var(--borders-secondary);
+      background: var(--backgrounds-hover);
+    }
+    #gudContainer .gud-chip.active {
+      border-color: var(--action-primary--default);
+      background: var(--accents-general--main);
+      color: var(--action-primary--default);
+    }
+
     /* ── Empty State ── */
     #gudContainer .gud-empty {
       text-align: center;
@@ -491,6 +566,19 @@
           <select id="groupFilter" onchange="filterDevices()">
             <option value="">All Groups</option>
           </select>
+        </div>
+        <div class="gud-field">
+          <label>Search</label>
+          <input type="text" class="gud-search" id="deviceSearch" placeholder="Search devices..." oninput="filterDevices()">
+        </div>
+        <div class="gud-field">
+          <label>Status</label>
+          <div class="gud-filter-chips">
+            <button class="gud-chip active" data-status="" onclick="setStatusFilter(this, '')">All</button>
+            <button class="gud-chip" data-status="success" onclick="setStatusFilter(this, 'success')">Communicating</button>
+            <button class="gud-chip" data-status="warning" onclick="setStatusFilter(this, 'warning')">Stale</button>
+            <button class="gud-chip" data-status="error" onclick="setStatusFilter(this, 'error')">Offline</button>
+          </div>
         </div>
         <button class="gud-btn gud-btn--secondary" id="btnRefresh" onclick="loadRealtimeStatus()">&#x21bb; Refresh</button>
       </div>
@@ -588,6 +676,14 @@ var allStatusInfo = [];
 var allGroups = [];
 var mergedDevices = [];
 
+// Sorting state
+var deviceSort = { col: "status", dir: "asc" };  // default: offline first
+var gapSort = { col: "start", dir: "asc" };
+var statusFilter = "";  // "" = all, "success", "warning", "error"
+var lastGaps = [];  // store for re-sorting
+var lastFromISO = "";
+var lastToISO = "";
+
 // ============================================================
 //  MyGeotab Add-In Lifecycle
 // ============================================================
@@ -660,6 +756,13 @@ function timeSince(iso) {
   return formatDuration(Date.now() - new Date(iso).getTime());
 }
 
+function sortIcon(col, sortState) {
+  if (sortState.col === col) {
+    return '<span class="gud-sort-icon active">' + (sortState.dir === "asc" ? "&#9650;" : "&#9660;") + '</span>';
+  }
+  return '<span class="gud-sort-icon">&#9650;&#9660;</span>';
+}
+
 // ============================================================
 //  TAB SWITCHING
 // ============================================================
@@ -669,6 +772,29 @@ function switchTab(name) {
   });
   document.getElementById("tab-realtime").classList.toggle("active", name === "realtime");
   document.getElementById("tab-historical").classList.toggle("active", name === "historical");
+}
+
+// ============================================================
+//  STATUS FILTER CHIPS
+// ============================================================
+function setStatusFilter(btn, value) {
+  statusFilter = value;
+  document.querySelectorAll("#gudContainer .gud-chip").forEach(function (c) { c.classList.remove("active"); });
+  btn.classList.add("active");
+  filterDevices();
+}
+
+// ============================================================
+//  DEVICE TABLE SORTING
+// ============================================================
+function sortDevicesBy(col) {
+  if (deviceSort.col === col) {
+    deviceSort.dir = deviceSort.dir === "asc" ? "desc" : "asc";
+  } else {
+    deviceSort.col = col;
+    deviceSort.dir = "asc";
+  }
+  filterDevices();
 }
 
 // ============================================================
@@ -762,25 +888,69 @@ function mergeAndRender() {
 
 function filterDevices() {
   var gf = val("groupFilter");
+  var search = val("deviceSearch").toLowerCase();
   var filtered = mergedDevices;
+
+  // Group filter
   if (gf) {
-    filtered = mergedDevices.filter(function (d) {
+    filtered = filtered.filter(function (d) {
       return d.groups.some(function (g) { return g.id === gf; });
     });
   }
 
-  var order = { error: 0, warning: 1, success: 2 };
+  // Status chip filter
+  if (statusFilter) {
+    filtered = filtered.filter(function (d) { return d.statusClass === statusFilter; });
+  }
+
+  // Text search filter
+  if (search) {
+    filtered = filtered.filter(function (d) {
+      return d.name.toLowerCase().indexOf(search) >= 0 ||
+             d.serialNumber.toLowerCase().indexOf(search) >= 0 ||
+             d.status.toLowerCase().indexOf(search) >= 0;
+    });
+  }
+
+  // Sort
+  var statusOrder = { error: 0, warning: 1, success: 2 };
+  var col = deviceSort.col;
+  var dir = deviceSort.dir === "asc" ? 1 : -1;
+
   filtered.sort(function (a, b) {
-    var oa = order[a.statusClass] != null ? order[a.statusClass] : 9;
-    var ob = order[b.statusClass] != null ? order[b.statusClass] : 9;
-    if (oa !== ob) return oa - ob;
-    return a.name.localeCompare(b.name);
+    var va, vb;
+    switch (col) {
+      case "name": va = a.name.toLowerCase(); vb = b.name.toLowerCase(); break;
+      case "serial": va = a.serialNumber.toLowerCase(); vb = b.serialNumber.toLowerCase(); break;
+      case "status":
+        va = statusOrder[a.statusClass] != null ? statusOrder[a.statusClass] : 9;
+        vb = statusOrder[b.statusClass] != null ? statusOrder[b.statusClass] : 9;
+        break;
+      case "lastComm":
+        va = a.lastComm ? new Date(a.lastComm).getTime() : 0;
+        vb = b.lastComm ? new Date(b.lastComm).getTime() : 0;
+        break;
+      case "timeSince": va = a.msSince; vb = b.msSince; break;
+      case "location":
+        va = (a.lat || 0) + (a.lng || 0);
+        vb = (b.lat || 0) + (b.lng || 0);
+        break;
+      default: va = a.name; vb = b.name;
+    }
+    if (va < vb) return -1 * dir;
+    if (va > vb) return 1 * dir;
+    return 0;
   });
 
-  var total = filtered.length;
-  var green = filtered.filter(function (d) { return d.statusClass === "success"; }).length;
-  var yellow = filtered.filter(function (d) { return d.statusClass === "warning"; }).length;
-  var red = filtered.filter(function (d) { return d.statusClass === "error"; }).length;
+  // KPI counts (from full group-filtered set, not search-filtered)
+  var allFiltered = mergedDevices;
+  if (gf) {
+    allFiltered = allFiltered.filter(function (d) { return d.groups.some(function (g) { return g.id === gf; }); });
+  }
+  var total = allFiltered.length;
+  var green = allFiltered.filter(function (d) { return d.statusClass === "success"; }).length;
+  var yellow = allFiltered.filter(function (d) { return d.statusClass === "warning"; }).length;
+  var red = allFiltered.filter(function (d) { return d.statusClass === "error"; }).length;
 
   document.getElementById("realtimeSummary").style.display = "flex";
   document.getElementById("totalDevices").textContent = total;
@@ -788,14 +958,20 @@ function filterDevices() {
   document.getElementById("staleDevices").textContent = yellow;
   document.getElementById("offlineDevices").textContent = red;
 
-  var html = '<div class="gud-panel"><div class="gud-panel__header"><span class="gud-panel__title">All Devices (' + total + ')</span></div>' +
+  // Build table with sortable headers
+  var html = '<div class="gud-panel"><div class="gud-panel__header">' +
+    '<span class="gud-panel__title">Devices (' + filtered.length + (filtered.length !== total ? ' of ' + total : '') + ')</span></div>' +
     '<div class="gud-table-wrap"><table class="gud-table"><thead><tr>' +
-    '<th>Device Name</th><th>Serial Number</th><th>Status</th>' +
-    '<th>Last Data Received</th><th>Time Since Last Comm</th><th>Location</th>' +
+    '<th class="gud-sortable" onclick="sortDevicesBy(\'name\')">Device Name ' + sortIcon("name", deviceSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortDevicesBy(\'serial\')">Serial Number ' + sortIcon("serial", deviceSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortDevicesBy(\'status\')">Status ' + sortIcon("status", deviceSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortDevicesBy(\'lastComm\')">Last Data Received ' + sortIcon("lastComm", deviceSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortDevicesBy(\'timeSince\')">Time Since Last Comm ' + sortIcon("timeSince", deviceSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortDevicesBy(\'location\')">Location ' + sortIcon("location", deviceSort) + '</th>' +
     '</tr></thead><tbody>';
 
   if (filtered.length === 0) {
-    html += '<tr><td colspan="6" class="gud-empty">No devices found</td></tr>';
+    html += '<tr><td colspan="6" class="gud-empty">No devices match your filters</td></tr>';
   } else {
     filtered.forEach(function (d) {
       var loc = (d.lat != null && d.lng != null && d.lat !== 0 && d.lng !== 0)
@@ -932,7 +1108,21 @@ function determineCause(gap, unplugged, lowVoltageRestart, voltageData, ignition
   return "Unknown - Possible Network Issue";
 }
 
+function sortGapsBy(col) {
+  if (gapSort.col === col) {
+    gapSort.dir = gapSort.dir === "asc" ? "desc" : "asc";
+  } else {
+    gapSort.col = col;
+    gapSort.dir = "asc";
+  }
+  renderGapResults(lastGaps, lastFromISO, lastToISO);
+}
+
 function renderGapResults(gaps, fromISO, toISO) {
+  lastGaps = gaps;
+  lastFromISO = fromISO;
+  lastToISO = toISO;
+
   var periodMs = new Date(toISO).getTime() - new Date(fromISO).getTime();
   var totalGapMs = gaps.reduce(function (sum, g) { return sum + g.durationMs; }, 0);
   var uptimePct = periodMs > 0 ? (((periodMs - totalGapMs) / periodMs) * 100).toFixed(1) : "100.0";
@@ -949,15 +1139,57 @@ function renderGapResults(gaps, fromISO, toISO) {
   document.getElementById("longestGap").textContent = longest > 0 ? formatDuration(longest) : "-";
   document.getElementById("commonCause").textContent = gaps.length > 0 ? commonCause : "-";
 
-  var html = '<div class="gud-panel"><div class="gud-panel__header"><span class="gud-panel__title">Communication Gaps (' + gaps.length + ')</span></div>' +
+  // Apply cause filter
+  var causeFilterVal = val("causeFilter");
+  var filtered = gaps;
+  if (causeFilterVal) {
+    filtered = gaps.filter(function (g) { return g.cause === causeFilterVal; });
+  }
+
+  // Sort
+  var col = gapSort.col;
+  var dir = gapSort.dir === "asc" ? 1 : -1;
+  var sorted = filtered.slice().sort(function (a, b) {
+    var va, vb;
+    switch (col) {
+      case "start": va = new Date(a.start).getTime(); vb = new Date(b.start).getTime(); break;
+      case "end": va = new Date(a.end).getTime(); vb = new Date(b.end).getTime(); break;
+      case "duration": va = a.durationMs; vb = b.durationMs; break;
+      case "cause": va = (a.cause || "").toLowerCase(); vb = (b.cause || "").toLowerCase(); break;
+      default: va = new Date(a.start).getTime(); vb = new Date(b.start).getTime();
+    }
+    if (va < vb) return -1 * dir;
+    if (va > vb) return 1 * dir;
+    return 0;
+  });
+
+  // Build cause filter dropdown
+  var causeOptions = '<option value="">All Causes</option>';
+  var uniqueCauses = {};
+  gaps.forEach(function (g) { if (g.cause) uniqueCauses[g.cause] = true; });
+  Object.keys(uniqueCauses).sort().forEach(function (c) {
+    causeOptions += '<option value="' + escHtml(c) + '"' + (causeFilterVal === c ? ' selected' : '') + '>' + escHtml(c) + '</option>';
+  });
+
+  var html = '<div class="gud-panel"><div class="gud-panel__header">' +
+    '<span class="gud-panel__title">Communication Gaps (' + sorted.length + (sorted.length !== gaps.length ? ' of ' + gaps.length : '') + ')</span>' +
+    '<select id="causeFilter" onchange="renderGapResults(lastGaps, lastFromISO, lastToISO)" style="font-family:var(--main-font);font-size:13px;padding:6px 10px;border:1px solid var(--borders-general);border-radius:4px;background:var(--backgrounds-main);color:var(--text-primary);min-width:180px;">' +
+    causeOptions + '</select></div>' +
     '<div class="gud-table-wrap"><table class="gud-table"><thead><tr>' +
-    '<th>#</th><th>Gap Start</th><th>Gap End</th><th>Duration</th><th>Probable Cause</th>' +
+    '<th>#</th>' +
+    '<th class="gud-sortable" onclick="sortGapsBy(\'start\')">Gap Start ' + sortIcon("start", gapSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortGapsBy(\'end\')">Gap End ' + sortIcon("end", gapSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortGapsBy(\'duration\')">Duration ' + sortIcon("duration", gapSort) + '</th>' +
+    '<th class="gud-sortable" onclick="sortGapsBy(\'cause\')">Probable Cause ' + sortIcon("cause", gapSort) + '</th>' +
     '</tr></thead><tbody>';
 
-  if (gaps.length === 0) {
-    html += '<tr><td colspan="5" class="gud-empty" style="color:var(--accents-success--detail);">No communication gaps detected — device had continuous uptime during this period.</td></tr>';
+  if (sorted.length === 0) {
+    var emptyMsg = gaps.length === 0
+      ? 'No communication gaps detected — device had continuous uptime during this period.'
+      : 'No gaps match the selected cause filter.';
+    html += '<tr><td colspan="5" class="gud-empty" style="color:var(--accents-success--detail);">' + emptyMsg + '</td></tr>';
   } else {
-    gaps.forEach(function (g, i) {
+    sorted.forEach(function (g, i) {
       html += '<tr><td>' + (i + 1) + '</td>' +
         '<td>' + formatDateTime(g.start) + '</td>' +
         '<td>' + formatDateTime(g.end) + '</td>' +

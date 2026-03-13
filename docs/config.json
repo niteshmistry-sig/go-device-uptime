@@ -1,0 +1,16 @@
+{
+  "name": "GO Device Uptime",
+  "supportEmail": "support@example.com",
+  "version": "1.0",
+  "items": [
+    {
+      "url": "https://niteshmistry-sig.github.io/go-device-uptime/index.html",
+      "path": "ActivityLink/",
+      "menuName": {
+        "en": "Device Uptime"
+      },
+      "svgIcon": "https://niteshmistry-sig.github.io/go-device-uptime/images/icon.svg"
+    }
+  ],
+  "isSigned": false
+}

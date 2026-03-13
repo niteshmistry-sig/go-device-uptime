@@ -563,13 +563,13 @@
       <h1>GO Device Uptime</h1>
       <p>Communication health and gap analysis</p>
     </div>
-    <button class="gud-btn gud-btn--primary" id="btnRefresh" onclick="loadRealtimeStatus()">&#x21bb; Refresh Status</button>
+    <button class="gud-btn gud-btn--primary" id="btnRefresh">&#x21bb; Refresh Status</button>
   </div>
 
   <!-- Tab Bar -->
-  <div class="gud-tab-bar">
-    <button class="gud-tab-btn active" onclick="switchTab('realtime')">Real-Time Status</button>
-    <button class="gud-tab-btn" onclick="switchTab('historical')">Historical Gap Analysis</button>
+  <div class="gud-tab-bar" id="gudTabBar">
+    <button class="gud-tab-btn active" data-tab="realtime">Real-Time Status</button>
+    <button class="gud-tab-btn" data-tab="historical">Historical Gap Analysis</button>
   </div>
 
   <!-- Content -->
@@ -582,21 +582,21 @@
       <div class="gud-toolbar">
         <div class="gud-field">
           <label>Filter by Group</label>
-          <select id="groupFilter" onchange="filterDevices()">
+          <select id="groupFilter">
             <option value="">All Groups</option>
           </select>
         </div>
         <div class="gud-field">
           <label>Search</label>
-          <input type="text" class="gud-search" id="deviceSearch" placeholder="Search devices..." oninput="filterDevices()">
+          <input type="text" class="gud-search" id="deviceSearch" placeholder="Search devices...">
         </div>
         <div class="gud-field">
           <label>Status</label>
           <div class="gud-filter-chips">
-            <button class="gud-chip active" data-status="" onclick="setStatusFilter(this, '')">All</button>
-            <button class="gud-chip" data-status="success" onclick="setStatusFilter(this, 'success')">Communicating</button>
-            <button class="gud-chip" data-status="warning" onclick="setStatusFilter(this, 'warning')">Stale</button>
-            <button class="gud-chip" data-status="error" onclick="setStatusFilter(this, 'error')">Offline</button>
+            <button class="gud-chip active" data-status="">All</button>
+            <button class="gud-chip" data-status="success">Communicating</button>
+            <button class="gud-chip" data-status="warning">Stale</button>
+            <button class="gud-chip" data-status="error">Offline</button>
           </div>
         </div>
       </div>
@@ -648,7 +648,7 @@
           <label>Gap Threshold (min)</label>
           <input type="number" id="gapThreshold" value="30" min="5" max="1440" style="width:90px;">
         </div>
-        <button class="gud-btn gud-btn--primary" id="btnAnalyze" onclick="analyzeGaps()">Analyze Gaps</button>
+        <button class="gud-btn gud-btn--primary" id="btnAnalyze">Analyze Gaps</button>
       </div>
 
       <!-- KPI Cards -->
@@ -788,19 +788,29 @@ function sortIcon(col, sortState) {
 //  TAB SWITCHING
 // ============================================================
 function switchTab(name) {
-  document.querySelectorAll(".gud-tab-btn").forEach(function (b, i) {
-    b.classList.toggle("active", (name === "realtime" && i === 0) || (name === "historical" && i === 1));
+  var container = document.getElementById("gudContainer");
+  container.querySelectorAll(".gud-tab-btn").forEach(function (b) {
+    b.classList.toggle("active", b.getAttribute("data-tab") === name);
   });
-  document.getElementById("tab-realtime").classList.toggle("active", name === "realtime");
-  document.getElementById("tab-historical").classList.toggle("active", name === "historical");
+  container.querySelectorAll(".gud-tab-content").forEach(function (panel) {
+    panel.classList.toggle("active", panel.id === "tab-" + name);
+  });
 }
+
+// Wire up tab clicks via event delegation (CSP-safe)
+document.getElementById("gudTabBar").addEventListener("click", function (e) {
+  var btn = e.target.closest(".gud-tab-btn");
+  if (btn && btn.getAttribute("data-tab")) {
+    switchTab(btn.getAttribute("data-tab"));
+  }
+});
 
 // ============================================================
 //  STATUS FILTER CHIPS
 // ============================================================
 function setStatusFilter(btn, value) {
   statusFilter = value;
-  document.querySelectorAll("#gudContainer .gud-chip").forEach(function (c) { c.classList.remove("active"); });
+  document.getElementById("gudContainer").querySelectorAll(".gud-chip").forEach(function (c) { c.classList.remove("active"); });
   btn.classList.add("active");
   filterDevices();
 }
@@ -982,13 +992,13 @@ function filterDevices() {
   // Build table with sortable headers
   var html = '<div class="gud-panel"><div class="gud-panel__header">' +
     '<span class="gud-panel__title">Devices (' + filtered.length + (filtered.length !== total ? ' of ' + total : '') + ')</span></div>' +
-    '<div class="gud-table-wrap"><table class="gud-table"><thead><tr>' +
-    '<th class="gud-sortable" onclick="sortDevicesBy(\'name\')">Device Name ' + sortIcon("name", deviceSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortDevicesBy(\'serial\')">Serial Number ' + sortIcon("serial", deviceSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortDevicesBy(\'status\')">Status ' + sortIcon("status", deviceSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortDevicesBy(\'lastComm\')">Last Data Received ' + sortIcon("lastComm", deviceSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortDevicesBy(\'timeSince\')">Time Since Last Comm ' + sortIcon("timeSince", deviceSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortDevicesBy(\'location\')">Location ' + sortIcon("location", deviceSort) + '</th>' +
+    '<div class="gud-table-wrap"><table class="gud-table" id="deviceTable"><thead><tr>' +
+    '<th class="gud-sortable" data-sort="name">Device Name ' + sortIcon("name", deviceSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="serial">Serial Number ' + sortIcon("serial", deviceSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="status">Status ' + sortIcon("status", deviceSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="lastComm">Last Data Received ' + sortIcon("lastComm", deviceSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="timeSince">Time Since Last Comm ' + sortIcon("timeSince", deviceSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="location">Location ' + sortIcon("location", deviceSort) + '</th>' +
     '</tr></thead><tbody>';
 
   if (filtered.length === 0) {
@@ -1194,14 +1204,14 @@ function renderGapResults(gaps, fromISO, toISO) {
 
   var html = '<div class="gud-panel"><div class="gud-panel__header">' +
     '<span class="gud-panel__title">Communication Gaps (' + sorted.length + (sorted.length !== gaps.length ? ' of ' + gaps.length : '') + ')</span>' +
-    '<select id="causeFilter" onchange="renderGapResults(lastGaps, lastFromISO, lastToISO)" style="font-family:var(--main-font);font-size:13px;padding:6px 10px;border:1px solid var(--borders-general);border-radius:4px;background:var(--backgrounds-main);color:var(--text-primary);min-width:180px;">' +
+    '<select id="causeFilter" style="font-family:var(--main-font);font-size:13px;padding:6px 10px;border:1px solid var(--borders-general);border-radius:4px;background:var(--backgrounds-main);color:var(--text-primary);min-width:180px;">' +
     causeOptions + '</select></div>' +
-    '<div class="gud-table-wrap"><table class="gud-table"><thead><tr>' +
+    '<div class="gud-table-wrap"><table class="gud-table" id="gapsTableEl"><thead><tr>' +
     '<th>#</th>' +
-    '<th class="gud-sortable" onclick="sortGapsBy(\'start\')">Gap Start ' + sortIcon("start", gapSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortGapsBy(\'end\')">Gap End ' + sortIcon("end", gapSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortGapsBy(\'duration\')">Duration ' + sortIcon("duration", gapSort) + '</th>' +
-    '<th class="gud-sortable" onclick="sortGapsBy(\'cause\')">Probable Cause ' + sortIcon("cause", gapSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="start">Gap Start ' + sortIcon("start", gapSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="end">Gap End ' + sortIcon("end", gapSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="duration">Duration ' + sortIcon("duration", gapSort) + '</th>' +
+    '<th class="gud-sortable" data-sort="cause">Probable Cause ' + sortIcon("cause", gapSort) + '</th>' +
     '</tr></thead><tbody>';
 
   if (sorted.length === 0) {
@@ -1246,6 +1256,62 @@ function setDefaults() {
   document.getElementById("gapFrom").value = fmt(week);
   document.getElementById("gapTo").value = fmt(now);
 }
+
+// ============================================================
+//  EVENT LISTENERS (CSP-safe, scoped to #gudContainer)
+// ============================================================
+(function () {
+  // Refresh button
+  document.getElementById("btnRefresh").addEventListener("click", function () {
+    loadRealtimeStatus();
+  });
+
+  // Analyze button
+  document.getElementById("btnAnalyze").addEventListener("click", function () {
+    analyzeGaps();
+  });
+
+  // Group filter
+  document.getElementById("groupFilter").addEventListener("change", function () {
+    filterDevices();
+  });
+
+  // Search input
+  document.getElementById("deviceSearch").addEventListener("input", function () {
+    filterDevices();
+  });
+
+  // Status filter chips (event delegation)
+  document.querySelector("#gudContainer .gud-filter-chips").addEventListener("click", function (e) {
+    var chip = e.target.closest(".gud-chip");
+    if (chip) {
+      setStatusFilter(chip, chip.getAttribute("data-status"));
+    }
+  });
+
+  // Table header sorting (event delegation on container)
+  var container = document.getElementById("gudContainer");
+  container.addEventListener("click", function (e) {
+    var th = e.target.closest("th.gud-sortable");
+    if (!th) return;
+    var col = th.getAttribute("data-sort");
+    if (!col) return;
+    var table = th.closest(".gud-table");
+    if (!table) return;
+    if (table.id === "deviceTable") {
+      sortDevicesBy(col);
+    } else if (table.id === "gapsTableEl") {
+      sortGapsBy(col);
+    }
+  });
+
+  // Cause filter dropdown (delegated since it's dynamically created)
+  container.addEventListener("change", function (e) {
+    if (e.target && e.target.id === "causeFilter") {
+      renderGapResults(lastGaps, lastFromISO, lastToISO);
+    }
+  });
+})();
 </script>
 
 </body>
